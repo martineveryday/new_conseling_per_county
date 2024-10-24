@@ -40,43 +40,43 @@ def clean_county_name(county):
     """
     return county.replace("(shared)", "").replace(" ", "")
 
-
-if __name__ == "__main__":
-
-    dfs = read_all_files(filenames)
-    df_client, df_ecenter, df_step4 = dfs['clients.csv'], dfs['ecenter.csv'], dfs['step4_data.csv']
-    
-    merged_df = merge_dfs_with_cleanup(df_client, df_ecenter, 'Client', drop_dup_col='Client')
-    
-    clients_by_county = merged_df.groupby(['Physical Address County'])['Client'].count().reset_index()
-    
-    df_step4['Physical Address County'] = df_step4['Physical Address County'].apply(clean_county_name)
-    
-    bus_per_county = df_step4[['Physical Address County', 'Total']].drop_duplicates()
-    clients_by_county.rename(columns={'Client': 'Number of Businesses Helped'}, inplace=True)
-    
-    final_df = merge_dfs_with_cleanup(
-        clients_by_county, 
-        bus_per_county, 
-        'Physical Address County', 
-        rename_cols={'Total': 'Total Business Per County'}
-    )
-    
-    final_df['normalized'] = final_df['Number of Businesses Helped'] / final_df['Total Business Per County']
-    final_df['normalized_min_max'] = (final_df['normalized'] - final_df['normalized'].min()) / (final_df['normalized'].max() - final_df['normalized'].min())
-    final_df['z_score'] = (final_df['normalized'] - final_df['normalized'].mean()) / final_df['normalized'].std()
-    
-    final_df.dropna(inplace=True)
-    
-    
-    
-    # Bar chart of Number of Businesses Helped per County
+def graph_results(final_df):
+    """
+    Graph the results of the final data frame on a bar chart .
+    """
     plt.figure(figsize=(10, 6))
-    plt.bar(final_df['Physical Address County'], final_df['Number of Businesses Helped'])
+    plt.bar(final_df['Physical Address County'], final_df['Penetration Rate Per County'])
     plt.xticks(rotation=90)
-    plt.title('Number of Businesses Helped per County')
+    plt.title('Counseling Penetration Rate for Business in PA in Fiscal Year 2024')
     plt.xlabel('County')
     plt.ylabel('Number of Businesses Helped')
     plt.tight_layout()
-    plt.show()
-    print(final_df)
+    return plt.show()
+
+dfs = read_all_files(filenames)
+df_client, df_ecenter, df_step4 = dfs['clients.csv'], dfs['ecenter.csv'], dfs['step4_data.csv']
+
+merged_df = merge_dfs_with_cleanup(df_client, df_ecenter, 'Client', drop_dup_col='Client')
+
+clients_by_county = merged_df.groupby(['Physical Address County'])['Client'].count().reset_index()
+clients_by_county.rename(columns={'Client': 'Number of Businesses Helped'}, inplace=True)
+
+
+df_step4['Physical Address County'] = df_step4['Physical Address County'].apply(clean_county_name)
+bus_per_county = df_step4[['Physical Address County', 'Total']].drop_duplicates()
+
+
+final_df = merge_dfs_with_cleanup(
+    clients_by_county, 
+    bus_per_county, 
+    'Physical Address County', 
+    rename_cols={'Total': 'Total Business Per County'}
+)
+final_df['Penetration Rate Per County'] = final_df['Number of Businesses Helped'] / final_df['Total Business Per County']
+final_df['Penetration Rate Per County %'] = final_df['Penetration Rate Per County'].apply(lambda x: f'{x * 100: .2f}%')
+final_df.dropna(inplace=True)
+
+
+graph_results(final_df)
+final_df.to_csv('Counseling Penetration Rate for Business in PA in Fiscal Year 2024.csv')
+

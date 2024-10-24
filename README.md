@@ -11,15 +11,14 @@ The script automatically handles cleaning numeric columns, removing redundant sp
 - **Automatic Data Cleaning**: Ensures that columns containing numbers are properly formatted, removing commas and other non-numeric characters.
 - **County Name Cleanup**: Cleans up county names by removing unwanted terms like "(shared)" and unnecessary spaces.
 - **Merge and Deduplication**: Combines datasets based on shared fields and removes any duplicate entries.
-- **Normalization Calculations**: The script calculates multiple normalized metrics:
+- **Normalization Calculations**: The script calculates multiple normalized metrics for penetration rate:
   - **Normalized Ratio**: Number of businesses helped divided by the total businesses per county.
-  - **Min-Max Normalization**: Scales the normalized ratio between 0 and 1.
-  - **Z-Score**: Provides the standardized z-score of the normalized ratio.
+
 
 ## Prerequisites
 
-- **Python 3.x**: Make sure you have Python installed on your system.
-    - pandas 2.2.3
+- **Python 3.x**: Make sure you have Python insta
+    - pandas 2.2.3lled on your system.
 - **Pandas Library**: The script uses the `pandas` library to handle the data. If you don’t have it installed, you can i
 
 ## How to Use
