@@ -17,9 +17,10 @@ The script automatically handles cleaning numeric columns, removing redundant sp
 
 ## Prerequisites
 
-- **Python 3.x**: Make sure you have Python insta
-    - pandas 2.2.3lled on your system.
-- **Pandas Library**: The script uses the `pandas` library to handle the data. If you don’t have it installed, you can i
+- **Python 3.x**: Make sure you have Python installed on your system.
+    - pandas 2.2.3
+- **Pandas Library**: The script uses the `pandas` library to handle the data.
+- **Matplolib Library**: The script uses the `matplotlib` visualize the data. 
 
 ## How to Use
 Place CSV Files: Ensure that the three required CSV files (clients.csv, ecenter.csv, and step4_data.csv) are in the same folder as the script.
