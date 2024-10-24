@@ -38,8 +38,6 @@ After running the script, you will get a table that shows:
 * Number of Businesses Helped: How many businesses have been assisted in that county.
 * Total Business Per County: The total number of businesses in each county.
 * Normalized: The ratio of businesses helped compared to the total businesses in the county.
-* Min-Max Normalized: A normalized score scaled between 0 and 1.
-* Z-Score: A standardized score based on the mean and standard deviation of the normalized values.
 
 ## Author
 
