@@ -1,47 +1,82 @@
-# Data Cleaning and Normalization Script
+# Report Generator Script
 
 ## Overview
-
-This script is designed to clean, merge, and normalize data from multiple CSV files. It is specifically tailored to handle datasets related to business information by county, ensuring the data is properly cleaned and ready for analysis. The main goal of the program is to provide a simplified and accurate representation of how many businesses have been helped in each county, relative to the total number of businesses present. 
-
-The script automatically handles cleaning numeric columns, removing redundant spaces and shared indicators from county names, and merging datasets to calculate various normalized values (e.g., min-max normalization and z-scores). By using this script, you can quickly prepare your datasets for further analysis, ensuring data integrity and consistency.
+This script processes and visualizes data related to counseling service requests. It performs operations such as data cleaning, aggregation, and plotting horizontal bar charts. Outputs include CSV files and PNG charts, organized by counties and centers.
 
 ## Features
-
-- **Automatic Data Cleaning**: Ensures that columns containing numbers are properly formatted, removing commas and other non-numeric characters.
-- **County Name Cleanup**: Cleans up county names by removing unwanted terms like "(shared)" and unnecessary spaces.
-- **Merge and Deduplication**: Combines datasets based on shared fields and removes any duplicate entries.
-- **Normalization Calculations**: The script calculates multiple normalized metrics for penetration rate:
-  - **Normalized Ratio**: Number of businesses helped divided by the total businesses per county.
-
+- **Data Processing**: Reads multiple CSV files and converts numeric columns for analysis.
+- **Data Aggregation**: Groups and aggregates data by counties or centers.
+- **Customizable Graphs**: Generates horizontal bar charts for visual insights.
+- **Configurable**: Uses a JSON configuration file for center mappings.
+- **Percentage Calculation**: Computes conversion rates for sessions.
 
 ## Prerequisites
+### Python Libraries
+Make sure the following libraries are installed:
+- `pandas`
+- `matplotlib`
+- `json`
 
-- **Python 3.x**: Make sure you have Python installed on your system.
-    - pandas 2.2.3
-- **Pandas Library**: The script uses the `pandas` library to handle the data.
-- **Matplolib Library**: The script uses the `matplotlib` visualize the data. 
+You can install them using pip:
+```bash
+pip install pandas matplotlib
+```
 
-## How to Use
-Place CSV Files: Ensure that the three required CSV files (clients.csv, ecenter.csv, and step4_data.csv) are in the same folder as the script.
-Run the Script: Simply run the Python script, and it will generate the normalized data for further analysis.
-Review the Output: The output will include a cleaned and merged dataset with calculated normalized values. You can use this data for reporting or further analysis.
+### Files Required
+- `centers_mapping.json`: JSON file with mappings for center names.
+- CSV files:
+  - `req_counseling_FY2024.csv`
+  - `conversion_rate_FY2024.csv`
+  - `conversion_initial_only.csv`
+  - `conversion_initial_hour_or_more.csv`
+  - `at_least_30_minutes.csv`
 
-## Files Used
-clients.csv: Contains data about clients and their county information.
-ecenter.csv: Provides additional information about the clients.
-step4_data.csv: Includes the total number of businesses per county, used for normalization.
-Example Output
-After running the script, you will get a table that shows:
+## Usage
+### Script Execution
+1. Ensure all required files are in the script's directory.
+2. Run the script using Python:
+   ```bash
+   python script_name.py
+   ```
+3. The script generates the following outputs:
+   - Horizontal bar charts saved as PNG files.
+   - Aggregated data saved as CSV files.
 
-* Physical Address County: The county where businesses are located.
-* Number of Businesses Helped: How many businesses have been assisted in that county.
-* Total Business Per County: The total number of businesses in each county.
-* Normalized: The ratio of businesses helped compared to the total businesses in the county.
+### Outputs
+- **Graphs**:
+  - Visualizations of counseling request data.
+  - Example: `Number of New Counseling Requests (FY 2024).png`
+
+- **Reports**:
+  - Aggregated data by county or center.
+  - Example: `Number_of_eCenter_Counseling_Requests_in_Fiscal_Year_2024_By_County.csv`
+
+## Classes and Methods
+### `ConfigLoader`
+- **`load_json(file_path)`**: Loads a JSON file and returns its content as a dictionary.
+
+### `FileManager`
+- **`read_all_files()`**: Reads CSV files into pandas DataFrames.
+- **`convert_to_numeric(df)`**: Converts numeric columns in DataFrames.
+- **`reassign_centers(center)`**: Reassigns center names using `centers_mapping.json`.
+
+### `DataAggregation`
+- **`aggregate_and_calculate(df, groupby_col, aggr_col, transform_func, drop_duplicates, agg_func)`**: Aggregates data by the specified column.
+
+### `GraphData`
+- **`graph_horizontal_barchart(df, x, y, title, color)`**: Creates and saves horizontal bar charts.
+
+### `ReportGenerator`
+- **`report_county(file)`**: Generates county-level aggregated reports.
+- **`report_center(file)`**: Generates center-level aggregated reports.
+- **`report_center_omit_some(file, rename_col)`**: Omits specific centers and aggregates data.
+- **`calculate_percentage(df1, df2, rename_col, df1_col, df2_col, percent)`**: Computes percentages for conversion rates.
+
+## Example Workflow
+1. Process data from `req_counseling_FY2024.csv`.
+2. Aggregate by center using `report_center()`.
+3. Visualize the data with `graph_horizontal_barchart()`.
+4. Calculate conversion rates between `req_counseling_FY2024.csv` and `at_least_30_minutes.csv`.
 
 ## Author
-
 **Martin De La Cruz**
-
-This script was created to streamline data cleaning and analysis, helping users focus on insights rather than data preparation.h
-  pip install pandas
