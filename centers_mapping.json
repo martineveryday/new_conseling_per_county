@@ -1,0 +1,18 @@
+{
+    "Bucknell": ["Bucknell", "BUCKNELL"],
+    "Clarion": ["Clarion", "CLARION"],
+    "Duquesne": ["Duquesne", "DUQUESNE"],
+    "Kutztown": ["K - ", "Kutztown", "KUTZTOWN"],
+    "Gannon": ["G - ", "Gannon", "GANNON"],
+    "Lead Office": ["Lead", "LEAD"],
+    "Lehigh": ["LE - ", "Lehigh", "LEHIGH"],
+    "Penn State": ["PENN", "Penn", "Lock Haven", "LOCK HAVEN"],
+    "Pittsburgh": ["Indiana", "Pittsburgh", "PI -", "INDIANA", "PITTSBURGH"],
+    "Scranton": ["Scranton", "SC -", "SCRANTON"],
+    "Shippensburg": ["SHIPPENSBURG", "SH -", "Shippensburg"],
+    "St. Francis": ["SF -", "FRANCIS UNIVERSITY", "St. Francis"],
+    "St. Vincent": ["SV -", "VINCENT COLLEGE", "St. Vincent"],
+    "Temple": ["TE -", "TEMPLE", "Temple"],
+    "Widener": ["WIDENER", "Widener", "WD - WIDENER SBDC"],
+    "Wilkes": ["WI -", "WILKES", "Wilkes"]
+}
